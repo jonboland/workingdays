@@ -1,3 +1,4 @@
+import argparse
 import calendar
 import datetime
 import sys
@@ -45,3 +46,27 @@ def _get_holidays(year, country, subdiv):
     return holidays.country_holidays(
         years=year, country=country, subdiv=subdiv
     )
+
+
+def parse_arguments():
+    parser = argparse.ArgumentParser(
+        description="Calculate the number of working days left in a given month."
+    )
+    parser.add_argument(
+        "date", type=str, help="Date in DD/MM/YYYY format. "
+        "The output from the program will be the number of working days left in "
+        "the given month after the given date."
+    )
+    parser.add_argument(
+        "-c", "--country", type=str, default=COUNTRY, help="Name of country to "
+        "base working day calculation on. Country names are specified using "
+        "ISO 3166-1 alpha-2 codes, such as UK, US, CA, etc."
+    )
+    parser.add_argument(
+        "-s", "--subdiv", type=str, default=SUBDIV, help="Name of country "
+        "subdivision to base working day calculation on. Subdivisions are "
+        "specified using ISO 3166-2 codes, such as England, NY, ON, etc. "
+        "For countries that don't have subdivisions, use None."
+    )
+
+    return parser.parse_args()
