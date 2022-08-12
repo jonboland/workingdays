@@ -15,4 +15,5 @@
     "python.testing.nosetestsEnabled": false,
     "python.testing.pytestEnabled": true,
     "restructuredtext.confPath": "",
+    "python.formatting.provider": "black",
 }
