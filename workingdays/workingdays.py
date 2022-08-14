@@ -1,6 +1,7 @@
 import argparse
 import calendar
 import datetime
+import os
 import sys
 
 import holidays
@@ -53,14 +54,15 @@ def _get_holidays(year, country, subdiv):
 
 def parse_arguments():
     parser = argparse.ArgumentParser(
-        description="Calculate the number of working days left in a given month."
+        description="Calculate the number of working days left in a given month.",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument(
         "date",
         type=str,
         help="Date in DD/MM/YYYY format. "
         "The output from the program will be the number of working days left in "
-        "the given month after the given date.",
+        "the month after the given date.",
     )
     parser.add_argument(
         "-c",
@@ -68,7 +70,8 @@ def parse_arguments():
         type=str,
         default=COUNTRY,
         help="Name of country to base working day calculation on. Country names are "
-        "specified using ISO 3166-1 alpha-2 codes, such as UK, US, CA, etc.",
+        "specified using ISO 3166-1 alpha-2 codes, such as GB, US, CA, etc. "
+        "Most countries can also be specified by name (Canada, Turkey, etc.).",
     )
     parser.add_argument(
         "-s",
@@ -85,6 +88,10 @@ def parse_arguments():
 
 
 def main():
+
+    # Enables colour formatting in terminal when program is frozen using Pyinstaller
+    os.system("")
+
     args = parse_arguments()
 
     try:
@@ -107,15 +114,14 @@ def main():
             )
         sys.exit()
 
-    print(colored(figlet_format("Working Days"), color="blue"))
-    print(colored("Created for Gosia by Jon.\n", color="blue"))
+    print()
+    print(colored(figlet_format("Working Days"), color="green"))
+    print(colored("Created for Gosia by Jon.\n", color="green"))
 
     print(
         f"The remaining number of working days in the month after {args.date} is {result}.\n"
     )
-    print(
-        f"The country used for this calculation was {args.country}."
-    )
+    print(f"The country used for this calculation was {args.country}.")
     if args.subdiv != "None":
         print(f"And the subdivision was {args.subdiv}.")
     print()
