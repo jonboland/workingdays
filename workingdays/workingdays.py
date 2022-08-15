@@ -1,3 +1,7 @@
+"""
+Take a date, calculate the number of working days left in the month,
+and print the result.
+"""
 import argparse
 import calendar
 import datetime
@@ -5,7 +9,7 @@ import os
 import sys
 
 import holidays
-from pyfiglet import figlet_format
+from pyfiglet import figlet_format  # type: ignore
 from termcolor import colored
 
 
@@ -14,18 +18,35 @@ SUBDIV = "England"
 
 
 def calculate_working_days(
-    given_date: str,
-    country: str = COUNTRY,
-    subdiv: str = SUBDIV,
+    given_date: str, country: str = COUNTRY, subdiv: str = SUBDIV
 ) -> int:
+    """
+    Take a date and calculate the number of working days
+    left in the month.
 
-    year, month, first_day = _split_date(given_date)
+    Args:
+        given_date (str): Date to base calculation on.
+        Format must be DD/MM/YYYY.
+
+        country (str): Optional country to base the calculation on
+        instead of the default country.
+
+        subdiv (str): Optional country subdivison to base the calculation on
+        instead of the default country subdivison.
+
+    Returns:
+        An integer representing the number of working days left in the month
+        after the given date.
+
+    """
+
+    year, month, given_day = _split_date(given_date)
     month_length = _get_month_length(year, month)
     bank_holidays = _get_holidays(year, country, subdiv)
 
     working_days = 0
 
-    for day in range(first_day + 1, month_length + 1):
+    for day in range(given_day + 1, month_length + 1):
 
         weekday = calendar.weekday(year, month, day)
         date = datetime.date(year, month, day)
@@ -36,25 +57,26 @@ def calculate_working_days(
     return working_days
 
 
-def _split_date(date: str) -> tuple[str, str, str]:
-    date = datetime.datetime.strptime(date, "%d/%m/%Y")
+def _split_date(given_date: str) -> tuple[int, int, int]:
+    date = datetime.datetime.strptime(given_date, "%d/%m/%Y")
 
     return (date.year, date.month, date.day)
 
 
-def _get_month_length(year, month):
+def _get_month_length(year: int, month: int) -> int:
     return calendar.monthrange(year, month)[1]
 
 
-def _get_holidays(year, country, subdiv):
+def _get_holidays(year: int, country: str, subdiv: str) -> holidays.HolidayBase:
     if subdiv == "None":
         return holidays.country_holidays(years=year, country=country)
+
     return holidays.country_holidays(years=year, country=country, subdiv=subdiv)
 
 
 def parse_arguments():
     parser = argparse.ArgumentParser(
-        description="Calculate the number of working days left in a given month.",
+        description="Calculate the number of working days left in a month.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument(
@@ -88,9 +110,7 @@ def parse_arguments():
 
 
 def main():
-
-    # Enables colour formatting in terminal when program is frozen using Pyinstaller
-    os.system("")
+    os.system("")  # Enable colour formatting in terminal once frozen
 
     args = parse_arguments()
 
