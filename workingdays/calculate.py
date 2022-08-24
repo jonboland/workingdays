@@ -100,9 +100,9 @@ def parse_arguments():
         "--subdiv",
         type=str,
         default=SUBDIV,
-        help="Name of country "
-        "subdivision to base working day calculation on. Subdivisions are "
-        "specified using ISO 3166-2 codes, such as England, NY, ON, etc. "
+        help="Name of country subdivision to base working day calculation on. "
+        "Subdivisions are specified using ISO 3166-2 codes, such as "
+        "England, NY, ON, etc. "
         "For countries that don't have subdivisions, use None.",
     )
 
@@ -110,7 +110,18 @@ def parse_arguments():
 
 
 def main():
-    os.system("")  # Enable colour formatting in terminal once frozen
+    """
+    Run the working days command-line application.
+
+    Call the calculate function with the provided date
+    and any optional command line arguments.
+
+    Print the number of working days left in the month.
+    Or, if arguments are invalid, display a helpful error message and exit.
+    """
+
+    # Enable colour formatting when application is bundled into an executable
+    os.system("")  # nosec
 
     args = parse_arguments()
 
