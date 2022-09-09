@@ -90,7 +90,8 @@ def test_main_valid_args_correct_output_displayed(monkeypatch, capsys):
     monkeypatch.setattr(calculate, "parse_arguments", fake_args)
 
     expected = (
-        "\nThe remaining number of working days in the month after 06/04/2023 is 14.\n\n"
+        "\nThe remaining number of working days in the month "
+        "after 06/04/2023 is 14.\n\n"
         "The country used for this calculation was GB.\n"
         "And the subdivision was England.\n\n"
     )
@@ -129,7 +130,10 @@ def test_main_unavailable_country(monkeypatch, capsys):
 
     monkeypatch.setattr(calculate, "parse_arguments", fake_args)
 
-    expected = "\nError: Country Atlantis not available. Please correct the issue and try again.\n\n"
+    expected = (
+        "\nError: Country Atlantis not available. "
+        "Please correct the issue and try again.\n\n"
+    )
 
     with pytest.raises(SystemExit):
         calculate.main()
