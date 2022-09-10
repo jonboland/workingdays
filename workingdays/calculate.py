@@ -74,7 +74,7 @@ def _get_holidays(year: int, country: str, subdiv: str) -> holidays.HolidayBase:
     return holidays.country_holidays(years=year, country=country, subdiv=subdiv)
 
 
-def parse_arguments():
+def parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Calculate the number of working days left in a month.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
@@ -109,7 +109,7 @@ def parse_arguments():
     return parser.parse_args()
 
 
-def main():
+def main() -> None:
     """
     Run the working days command-line application.
 
@@ -150,7 +150,8 @@ def main():
     print(colored("Created for Gosia by Jon.\n", color="green"))
 
     print(
-        f"The remaining number of working days in the month after {args.date} is {result}.\n"
+        "The remaining number of working days in the month after "
+        f"{args.date} is {result}.\n"
     )
     print(f"The country used for this calculation was {args.country}.")
     if args.subdiv != "None":
